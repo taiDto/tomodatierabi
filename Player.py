@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+import streamlit.components.v1 as components
 
 DATA_FILE = "diagnosis.json"
 
@@ -75,6 +76,16 @@ if not st.session_state.show_result:
             st.rerun()
 
 else:
+    # ★ここが追加：結果画面になった瞬間、強制的にページの一番上へスクロールさせる
+    components.html(
+        """
+            <script>
+                window.parent.document.querySelector('section.main').scrollTo(0, 0);
+            </script>
+        """,
+        height=0
+    )
+
     scores = [0] * len(data["axes"])
     max_scores = [0] * len(data["axes"])
     
